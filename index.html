@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>first try</title>
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
+  
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+
+  <style>
+  .header{
+    height:20%;
+  }
+
+  .footer{
+    height:20%;
+  }
+  </style>
+
+  <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+  
+</head>
+<body>
+
+  <!-- Start of first page -->
+  <div data-role="page" id="report">
+
+    <div data-role="header" data-theme="b">
+      <h1>report</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+      <p>report<a href="#bar"  data-transition="slide"  >bar</a></p>
+    </div><!-- /content -->
+
+    <div data-role="footer">
+     <div data-role="navbar" data-iconpos="right">
+      <ul>
+        <li><a href="#" data-icon="grid" class="ui-btn-active">Report</a></li>
+        <li><a href="#" data-icon="star" >Lists</a></li>
+        <li><a href="#" data-icon="gear">Setup</a></li>
+      </ul>
+    </div><!-- /navbar -->
+  </div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of second page -->
+<div data-role="page" id="lists">
+
+  <div data-role="header" data-theme="b">
+    <h1>Lists</h1>
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    <p>Lists</p>
+    
+  </div><!-- /content -->
+
+  <div data-role="footer">
+   <div data-role="navbar" data-iconpos="right">
+    <ul>
+      <li><a href="#" data-icon="grid">Report</a></li>
+      <li><a href="#" data-icon="star" class="ui-btn-active">Lists</a></li>
+      <li><a href="#" data-icon="gear">Setup</a></li>
+    </ul>
+  </div><!-- /navbar -->
+</div><!-- /footer -->
+</div><!-- /page -->
+
+<!-- Start of second page -->
+<div data-role="page" id="setup">
+
+  <div data-role="header" data-theme="b">
+    <h1>Setup</h1>
+  </div><!-- /header -->
+
+  <div role="main" class="ui-content">
+    <p>setup</p>
+    
+  </div><!-- /content -->
+
+  <div data-role="footer">
+   <div data-role="navbar" data-iconpos="right">
+    <ul>
+      <li><a href="#" data-icon="grid">Report</a></li>
+      <li><a href="#" data-icon="star">Lists</a></li>
+      <li><a href="#" data-icon="gear" class="ui-btn-active" >Setup</a></li>
+    </ul>
+  </div><!-- /navbar -->
+</div><!-- /footer -->
+</div><!-- /page -->
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+// Define a click binding for all anchors in the page
+$( "a" ).on( "click", function( event ) {
+
+  // Prevent the usual navigation behavior
+  event.preventDefault();
+        event.stopPropagation(); // stop the click from bubbling
+        var options = {
+          transition: "slide",
+          reverse: false,
+          changeHash: false
+        };
+
+        var next = this.attributes["data-icon"].value == 'grid' ? "#report" : "#lists";
+        next = this.attributes["data-icon"].value == 'gear' ? "#setup" : next;
+        next = this.attributes["data-icon"].value == 'star' ? "#lists" : next;
+
+        $(':mobile-pagecontainer').pagecontainer('change', next ,options);
+        
+        $("a").removeClass('ui-btn-active');
+        $(this).addClass('ui-btn-active');
+        
+      });
+});
+</script>
+</body>
+
+
+</html>
