@@ -1,5 +1,6 @@
 var options =
-{	"isApplied" : false,
+{	
+	"isApplied" : false,
 	"currentparkinglot" :
 	{
 		"oid" : null,
