@@ -3,18 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>first try</title>
+  <title>Support Collector for ParkingLot</title>
   <link rel="shortcut icon" href="favicon.ico">
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" />
-  
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.css" /> 
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
-
-    <!-- Loading Bootstrap
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
-  -->
-    <!-- Loading Flat UI 
-    <link href="css/flat-ui.css" rel="stylesheet">
-  -->
+ 
   <style>
   
   .ui-content
@@ -103,114 +96,112 @@
     </div>
     <br>
    
-</div>
+  </div>
+      <div data-role="footer">
+       <div data-role="navbar" data-iconpos="right">
+        <ul>
+          <li><a href="#" data-icon="grid" class="ui-btn-active">Report</a></li>
+          <li><a href="#" data-icon="star" >Lists</a></li>
+          <li><a href="#" data-icon="gear">Setup</a></li>
+        </ul>
+      </div><!-- /navbar -->
+    </div><!-- /footer -->
+  </div><!-- /page -->
+
+  <!-- Start of second page -->
+  <div data-role="page" style="background-color:#1ABC9C;" id="lists">
+
+    <div data-role="header" data-theme="b">
+      <h1>Lists</h1>
+    </div><!-- /header -->
+
+    <div role="main" class="ui-content">
+      <ul data-role="listview">
+        <li><a href="#">
+          <img src="./images/red.png">
+          <h2>주차장 B</h2>
+          <p>혼잡 - 100/100</p></a>
+        </li>
+        <li><a href="#">
+          <img src="./images/yellow.png">
+          <h2>주차장 B</h2>
+          <p>보통 - 40/80</p></a>
+        </li>
+        <li><a href="#">
+          <img src="./images/green.png">
+          <h2>주차장 A</h2>
+          <p>여유 10/100</p></a>
+        </li>
+      </ul>
+      
+    </div><!-- /content -->
+
     <div data-role="footer">
      <div data-role="navbar" data-iconpos="right">
       <ul>
-        <li><a href="#" data-icon="grid" class="ui-btn-active">Report</a></li>
-        <li><a href="#" data-icon="star" >Lists</a></li>
+        <li><a href="#" data-icon="grid">Report</a></li>
+        <li><a href="#" data-icon="star" class="ui-btn-active">Lists</a></li>
         <li><a href="#" data-icon="gear">Setup</a></li>
       </ul>
     </div><!-- /navbar -->
   </div><!-- /footer -->
-</div><!-- /page -->
+  </div><!-- /page -->
 
-<!-- Start of second page -->
-<div data-role="page" style="background-color:#1ABC9C;" id="lists">
+  <!-- Start of second page -->
+  <div data-role="page" style="background-color:#95A5A6;" id="setup" >
 
-  <div data-role="header" data-theme="b">
-    <h1>Lists</h1>
-  </div><!-- /header -->
+    <div data-role="header" data-theme="b">
+      <h1>Setup</h1>
+    </div><!-- /header -->
 
-  <div role="main" class="ui-content">
-    <ul data-role="listview">
-      <li><a href="#">
-        <img src="./images/red.png">
-        <h2>주차장 B</h2>
-        <p>혼잡 - 100/100</p></a>
-      </li>
-      <li><a href="#">
-        <img src="./images/yellow.png">
-        <h2>주차장 B</h2>
-        <p>보통 - 40/80</p></a>
-      </li>
-      <li><a href="#">
-        <img src="./images/green.png">
-        <h2>주차장 A</h2>
-        <p>여유 10/100</p></a>
-      </li>
-    </ul>
-    
+    <div role="main" class="ui-content">
+
+     <div class="ui-grid-solo">
+         <div id="setupinfo" >
+            대상 주차장을 선택하여 주십시오.
+         </div>
+     </div>
+
+      <div class="ui-grid-a">
+       
+       <div id="parkinglotlist">
+         
+       </div>
+     </div>
+
+     <div class="ui-grid-a"></div>
+     <div class="ui-grid-solo">
+      <div class="ui-block-a"><input type="button" onclick="applyParkingLot();" value="Apply"></div>
+    </div>
+   
   </div><!-- /content -->
 
   <div data-role="footer">
    <div data-role="navbar" data-iconpos="right">
     <ul>
       <li><a href="#" data-icon="grid">Report</a></li>
-      <li><a href="#" data-icon="star" class="ui-btn-active">Lists</a></li>
-      <li><a href="#" data-icon="gear">Setup</a></li>
+      <li><a href="#" data-icon="star">Lists</a></li>
+      <li><a href="#" data-icon="gear" class="ui-btn-active" >Setup</a></li>
     </ul>
   </div><!-- /navbar -->
-</div><!-- /footer -->
-</div><!-- /page -->
+  </div><!-- /footer -->
+  </div><!-- /page -->
 
-<!-- Start of second page -->
-<div data-role="page" style="background-color:#95A5A6;" id="setup" >
 
-  <div data-role="header" data-theme="b">
-    <h1>Setup</h1>
-  </div><!-- /header -->
-
-  <div role="main" class="ui-content">
-
-   <div class="ui-grid-solo">
-       <div id="setupinfo" >
-          대상 주차장을 선택하여 주십시오.
-       </div>
-   </div>
-
-    <div class="ui-grid-a">
+  <script type="text/javascript">
+   $(document).ready(function() {
+      
+      //초기 이벤트 설
+      initApp();
      
-     <div id="parkinglotlist">
-       
-     </div>
-   </div>
+      //init parking lot list
+      initParkingLot();
 
-   <div class="ui-grid-a"></div>
-   <div class="ui-grid-solo">
-    <div class="ui-block-a"><input type="button" onclick="applyParkingLot();" value="Apply"></div>
-  </div>
- 
-</div><!-- /content -->
+      //초기화면 설
+      $(':mobile-pagecontainer').pagecontainer('change', "#setup" ,null);
 
-<div data-role="footer">
- <div data-role="navbar" data-iconpos="right">
-  <ul>
-    <li><a href="#" data-icon="grid">Report</a></li>
-    <li><a href="#" data-icon="star">Lists</a></li>
-    <li><a href="#" data-icon="gear" class="ui-btn-active" >Setup</a></li>
-  </ul>
-</div><!-- /navbar -->
-</div><!-- /footer -->
-</div><!-- /page -->
-
-
-<script type="text/javascript">
- $(document).ready(function() {
-    
-  //초기 이벤트 설
-  initApp();
- 
-  //init parking lot list
-  initParkingLot();
-
-
-  //초기화면 설
-  $(':mobile-pagecontainer').pagecontainer('change', "#setup" ,null);
-
-
-});
-</script>
+    });
+  </script>
 </body>
 
 

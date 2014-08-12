@@ -1,6 +1,5 @@
 //app.js
-var testcnt = 0;
-
+//
 function initApp()
 {
 // Define a click binding for all anchors in the page
@@ -156,7 +155,7 @@ function applyParkingLot()
 	if(options && options.currentparkinglot.oid)
 	{
 		console.log(options.currentparkinglot.oid + " 로 설정...");
-		
+
 		$('#currentParkingLot').text(options.currentparkinglot.parking_nm);
 		$('#currentNum').text(options.currentparkinglot.vehicles);
 
