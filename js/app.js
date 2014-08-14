@@ -1,4 +1,5 @@
 //app.js
+var _isApplied = false;
 //
 function initApp() {
     // Define a click binding for all anchors in the page
@@ -8,7 +9,7 @@ function initApp() {
         event.preventDefault();
         event.stopPropagation(); 
 
-        if (options && options.currentparkinglot.oid && options.currentparkinglot.isApplied) {
+        if (options && options.currentparkinglot.oid && _isApplied) {
             if (this.attributes["data-icon"]) {
                 var next = this.attributes["data-icon"].value == 'grid' ? "#report" : "#lists";
                 next = this.attributes["data-icon"].value == 'gear' ? "#setup" : next;
@@ -45,7 +46,8 @@ function initParkingLot() {
             f: "json",
             where: "1=1",
             returnGeometry: false,
-            outFields: "*"
+            outFields: "*",
+            orderByFields : options.editinfo.editfields.namefield
         }
 
     })
@@ -62,6 +64,7 @@ function setPage(next, c, isRefresh) {
     if (isRefresh) {
         getCurrentParkingInfo(c);
     }
+
     var options = {
         transition: "slide",
         reverse: false,
@@ -93,7 +96,8 @@ function setSelectionList(features) {
                 alert('대상 주차장을 선택해 주세요.');
                 return;
             } else {
-                getCurrentParkingInfo(this.options[this.selectedIndex].value);
+                getCurrentParkingInfo($("#select-choice-1 option:selected").text());
+                _isApplied = false;
             }
 
         });
@@ -115,15 +119,20 @@ function getCurrentParkingInfo(c) {
     })
         .done(function(data) {
             if (data) {
+
                 var feature = JSON.parse(data).features[0];
 
-                options.currentparkinglot.oid = feature.attributes[options.editinfo.editfields.oidfield];
-                options.currentparkinglot.parking_nm = feature.attributes[options.editinfo.editfields.namefield];
+                if(feature){
+                     options.currentparkinglot.oid = feature.attributes[options.editinfo.editfields.oidfield];
+                    options.currentparkinglot.parking_nm = feature.attributes[options.editinfo.editfields.namefield];
 
-                options.currentparkinglot.vehicles = feature.attributes[options.editinfo.editfields.vehiclefield];
-                options.currentparkinglot.capacity = feature.attributes[options.editinfo.editfields.capacity];
+                    options.currentparkinglot.vehicles = feature.attributes[options.editinfo.editfields.vehiclefield];
+                    options.currentparkinglot.capacity = feature.attributes[options.editinfo.editfields.capacityfield];
 
-                updatePagesInfo();
+                    updatePagesInfo(); 
+                }
+               
+
 
             } else {
                 alert('정보를 찾을 수 없습니다.');
@@ -139,7 +148,7 @@ function applyParkingLot() {
         $('#currentParkingLot').text(options.currentparkinglot.parking_nm);
         $('#currentNum').text(options.currentparkinglot.vehicles);
 
-        options.currentparkinglot.isApplied = true;
+        _isApplied = true;
         setPage('#report', options.currentparkinglot.parking_nm, true);
     }
 }
@@ -190,7 +199,7 @@ function getCurrentStatus() {
 
                     if (options.currentparkinglot.oid == feature.attributes[options.editinfo.editfields.oidfield]) {
                         options.currentparkinglot.vehicles = feature.attributes[options.editinfo.editfields.vehiclefield];
-                        //options.currentparkinglot.capacity = feature.attributes[options.editinfo.editfields.capacity];
+                        //options.currentparkinglot.capacity = feature.attributes[options.editinfo.editfields.capacityfield];
                     } else {
                         console.log('id doesnot matched.');
                         return;
@@ -207,13 +216,15 @@ function getCurrentStatus() {
 function updatePagesInfo() {
     //setup pages
     var innerhtml = "<p>대상 :" + options.currentparkinglot.parking_nm + "</p>";
-    innerhtml += "<p>수용대수 : " + options.currentparkinglot.capacity + "</p>";
-    innerhtml += "<p>주차대수 : " + options.currentparkinglot.vehicles + "</p>";
+    innerhtml += "<p>총주차 : " + options.currentparkinglot.capacity + "</p>";
+    innerhtml += "<p>현주차 : " + options.currentparkinglot.vehicles + "</p>";
 
     $('#setupinfo').html(innerhtml);
 
     //report pages
     $('#currentNum').text(options.currentparkinglot.vehicles);
+    $('#capacityNum').text(options.currentparkinglot.capacity);
+    
 }
 
 function openPopup() {

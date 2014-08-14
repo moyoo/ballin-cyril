@@ -1,4 +1,13 @@
-/** base layout **/
+
+ /** base layout **/
+ html,body{
+ 	font-family:맑은 고딕, "Times New Roman", Times, serif; 
+ }
+1,h2,h3,h4,h5,h6,pre,code,address,caption,cite,code,em,th,input,select
+{
+	font-family:맑은 고딕, Arial, Helvetica, sans-serif; 
+}
+
  .ui-content
   {
     min-height: 250px;
